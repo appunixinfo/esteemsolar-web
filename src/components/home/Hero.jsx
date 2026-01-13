@@ -7,7 +7,6 @@ import SolarParticles from '../ui/SolarParticles';
 const Hero = () => {
   return (
     <div className="relative bg-white overflow-hidden">
-      <SolarParticles />
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center py-16 px-4 sm:px-6 lg:px-8">
         
         {/* Left Content */}
