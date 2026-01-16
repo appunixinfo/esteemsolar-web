@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
-import { Sun, Menu, X, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom'; // 1. Added Link for internal routing
+import { Sun, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // 2. Updated hrefs to paths that match our App.jsx routes
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About', href: '#' },
-    { name: 'Products', href: '#' },
-    { name: 'Services', href: '#' },
-    { name: 'Contact', href: '#' },
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Products', path: '/products' },
+    { name: 'Services', path: '/services' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
-          {/* Logo Section */}
-          <div className="flex items-center">
+          
+          {/* Logo Section - Now clickable to return Home */}
+          <Link to="/" className="flex items-center gap-2">
             <div className="flex-shrink-0 flex items-center gap-2">
               <Sun className="h-10 w-10 text-orange-500 fill-orange-500" />
               <div className="flex flex-col">
@@ -25,26 +28,19 @@ const Navbar = () => {
                 <span className="text-[10px] font-semibold text-orange-600 tracking-[0.2em] uppercase">Solar Energy</span>
               </div>
             </div>
-          </div>
+          </Link>
 
-          {/* Desktop Menu */}
+          {/* Desktop Menu - Using <Link> instead of <a> */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.path}
                 className="text-gray-700 hover:text-blue-900 font-semibold transition-colors"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
-            <a
-              href="tel:+91XXXXXXXXXX"
-              className="flex items-center gap-2 bg-blue-900 text-white px-5 py-2.5 rounded-full font-bold hover:bg-orange-600 transition-all shadow-md"
-            >
-              <Phone size={18} />
-              Call Now
-            </a>
           </div>
 
           {/* Mobile Button */}
@@ -60,9 +56,14 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 p-4 space-y-4 shadow-xl">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="block text-lg font-medium text-gray-800 border-b pb-2">
+            <Link 
+              key={link.name} 
+              to={link.path} 
+              onClick={() => setIsOpen(false)} // Close menu when a link is clicked
+              className="block text-lg font-medium text-gray-800 shadow pb-2"
+            >
               {link.name}
-            </a>
+            </Link>
           ))}
         </div>
       )}
